@@ -3,7 +3,7 @@
 
 Taller individual · *Machine Learning aplicado a Economía y Finanzas*
 
-**Aplicación desplegada:** _(pegar aquí el enlace de Streamlit Community Cloud)_
+**Aplicación desplegada:** https://perfiles-financieros-colombia.streamlit.app
 **Video de sustentación:** _(pegar aquí el enlace)_
 
 ---
@@ -92,7 +92,7 @@ encontraría la dimensión "empresa grande / empresa pequeña".
 | CP2 | 24,8 % | **Escala vs. rotación**: empresas grandes de balance pesado frente a comercializadoras de alta rotación |
 | CP3 | 18,5 % | **Expansión apalancada**: crecimiento de ingresos y activos acompañado de más deuda |
 
-**K-Means.** La silueta es máxima en **K = 4** (≈ 0,29). Esa estructura es moderada: los grupos existen, pero con
+**K-Means.** La silueta es máxima en **K = 4** (≈ 0,28). Esa estructura es moderada: los grupos existen, pero con
 fronteras difusas.
 
 | Segmento | % empresas | Perfil (medianas) |
@@ -128,8 +128,8 @@ resultados precalculados ni imágenes fijas.
 ## 6. Cómo ejecutar
 
 ```bash
-git clone <url-de-este-repositorio>
-cd <carpeta>
+git clone https://github.com/sebasrolemmel/perfiles-financieros-empresas-colombia.git
+cd perfiles-financieros-empresas-colombia
 pip install -r requirements.txt
 streamlit run app.py
 ```
