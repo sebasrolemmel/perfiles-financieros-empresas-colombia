@@ -1,7 +1,7 @@
 # Perfiles financieros de las empresas medianas y grandes de Colombia
 ### ACP y K-Means sobre la base de Supersociedades (cierre 2024)
 
-Taller individual · *Machine Learning aplicado a Economía y Finanzas* · Pontificia Universidad Javeriana Cali
+Taller individual · *Machine Learning aplicado a Economía y Finanzas*
 
 **Aplicación desplegada:** _(pegar aquí el enlace de Streamlit Community Cloud)_
 **Video de sustentación:** _(pegar aquí el enlace)_
