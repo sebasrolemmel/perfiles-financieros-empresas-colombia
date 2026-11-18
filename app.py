@@ -19,7 +19,7 @@ st.set_page_config(
     layout="wide",
 )
 
-PALETA = ["#0F766E", "#C2410C", "#4338CA", "#B45309", "#BE185D", "#15803D", "#0369A1", "#7C3AED", "#A16207", "#475569"]
+PALETA = ["#0F766E", "#E8590C", "#4338CA", "#EAB308", "#DB2777", "#65A30D", "#0EA5E9", "#7C3AED", "#64748B", "#92400E"]
 
 st.markdown(
     """
@@ -483,12 +483,22 @@ elif pagina == "4. ACP":
         ix, iy = opciones.index(ex), opciones.index(ey)
         pdf = pd.DataFrame({ex: puntajes[:, ix], ey: puntajes[:, iy], "Empresa": d["razon_social"], color_por: d[color_por]})
         fig = px.scatter(pdf, x=ex, y=ey, color=color_por, hover_name="Empresa", opacity=0.55, color_discrete_sequence=PALETA)
-        esc = np.abs(puntajes[:, [ix, iy]]).max() * 0.8
+        # Las flechas se escalan para que quepan dentro de la nube de puntos
+        rango = min(np.abs(puntajes[:, ix]).max(), np.abs(puntajes[:, iy]).max())
+        largo_max = np.sqrt(cargas.loc[list(variables), ex] ** 2 + cargas.loc[list(variables), ey] ** 2).max()
+        esc = 0.75 * rango / largo_max
+        usadas = []
         for var in variables:
             lx, ly = cargas.loc[var, ex] * esc, cargas.loc[var, ey] * esc
             fig.add_annotation(x=lx, y=ly, ax=0, ay=0, xref="x", yref="y", axref="x", ayref="y",
-                               showarrow=True, arrowhead=2, arrowwidth=1.5, arrowcolor="#111827")
-            fig.add_annotation(x=lx * 1.1, y=ly * 1.1, text=pr.nombre(var), showarrow=False, font=dict(size=11, color="#111827"))
+                               showarrow=True, arrowhead=2, arrowwidth=1.8, arrowcolor="#111827")
+            # Etiqueta en la punta; si choca con otra ya ubicada, se desplaza verticalmente
+            tx, ty = lx * 1.12, ly * 1.12
+            while any(abs(tx - ux) < 0.25 * rango and abs(ty - uy) < 0.07 * rango for ux, uy in usadas):
+                ty -= 0.08 * rango
+            usadas.append((tx, ty))
+            fig.add_annotation(x=tx, y=ty, text=f"<b>{pr.nombre(var)}</b>", showarrow=False,
+                               font=dict(size=12, color="#111827"), bgcolor="rgba(255,255,255,0.75)")
         info = varianza["% varianza"].iloc[ix] + varianza["% varianza"].iloc[iy]
         fig.update_layout(
             title=f"Biplot: empresas y variables en {ex} vs {ey} (resume el {info:.1f} % de la varianza)",
@@ -713,7 +723,7 @@ elif pagina == "6. Conclusiones":
         tener perfiles financieros opuestos, así que segmentar solo por actividad económica (como hacen muchos
         análisis sectoriales) deja información por fuera.
 
-        **4. Los grupos no son nubes separadas.** La silueta máxima (≈0,29) indica una estructura moderada: los
+        **4. Los grupos no son nubes separadas.** La silueta máxima (≈0,28) indica una estructura moderada: los
         indicadores financieros forman un continuo y una parte importante de las empresas queda en la frontera entre
         dos segmentos. Los segmentos sirven como **tipologías de referencia**, no como categorías rígidas. Por eso, una
         empresa con silueta baja debería analizarse caso a caso.
