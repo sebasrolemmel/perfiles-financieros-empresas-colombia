@@ -4,7 +4,6 @@
 Taller individual · *Machine Learning aplicado a Economía y Finanzas*
 
 **Aplicación desplegada:** https://perfiles-financieros-colombia.streamlit.app
-**Video de sustentación:** _(pegar aquí el enlace)_
 
 ---
 
